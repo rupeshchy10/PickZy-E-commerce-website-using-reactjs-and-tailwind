@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Banner from "../components/Banner";
 import Product from "../components/Product";
 
-
 const Home = () => {
+	const [searchTerm, setSearchTerm] = useState("");
+	const [isScrolled, setIsScrolled] = useState(false);
+
+	useEffect(() => {
+		const changeNavbar = () => {
+			setIsScrolled(window.scrollY > 10);
+		};
+		window.addEventListener("scroll", changeNavbar);
+	}, []);
+
+	const handleScroll = () => {
+		const section = document.getElementById("product-section");
+		if (section) {
+			section.scrollIntoView({ behavior: "smooth" });
+		}
+	};
 	return (
 		<div>
-			<Navbar />
-            <Banner/>
-            <Product/>
+			<Navbar
+				handleScroll={handleScroll}
+				setSearchTerm={setSearchTerm}
+				isScrolled={isScrolled}
+			/>
+			<Banner />
+			<Product searchTerm={searchTerm} />
 		</div>
 	);
 };
