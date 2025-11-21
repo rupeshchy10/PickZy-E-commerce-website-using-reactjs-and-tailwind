@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ProductList from "../assets/ProductList";
 import { GoHeartFill } from "react-icons/go";
 
-const Product = ({ searchTerm }) => {
+const Product = ({ searchTerm, addToCart }) => {
 	const categories = [
 		"All",
 		"Men",
@@ -71,7 +71,10 @@ const Product = ({ searchTerm }) => {
 							${product.price.toFixed(2)}
 						</span>
 					</div>
-					<button className="bg-blue-600 text-white text-lg py-3 w-full rounded-lg cursor-pointer active:bg-blue-700">
+					<button
+						className="bg-blue-600 text-white text-lg py-3 w-full rounded-lg cursor-pointer active:bg-blue-700"
+						onClick={() => addToCart(product)}
+					>
 						Add to Cart
 					</button>
 				</div>
