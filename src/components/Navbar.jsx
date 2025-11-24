@@ -4,7 +4,13 @@ import { IoSearch } from "react-icons/io5";
 import { GoHeartFill } from "react-icons/go";
 import { HiShoppingBag } from "react-icons/hi2";
 
-const Navbar = ({ handleScroll, setSearchTerm, isScrolled, handlePanel }) => {
+const Navbar = ({
+	handleScroll,
+	setSearchTerm,
+	isScrolled,
+	handlePanel,
+	totalItems,
+}) => {
 	return (
 		<header
 			className={`bg-white fixed top-0 left-0 right-0 z-30 ${
@@ -59,9 +65,11 @@ const Navbar = ({ handleScroll, setSearchTerm, isScrolled, handlePanel }) => {
 						onClick={() => handlePanel("cart")}
 					>
 						<HiShoppingBag />
-						<span className="flex justify-center items-center bg-red-600 text-white w-5 h-5 rounded-full text-[14px] absolute top-4 right-4 border-2 border-white">
-							1
-						</span>
+						{totalItems > 0 && (
+							<span className="flex justify-center items-center bg-red-600 text-white w-5 h-5 rounded-full text-[14px] absolute top-4 right-4 border-2 border-white">
+								{totalItems}
+							</span>
+						)}
 					</button>
 				</div>
 			</nav>

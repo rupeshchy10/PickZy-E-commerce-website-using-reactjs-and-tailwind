@@ -8,6 +8,10 @@ const Cart = ({
 	removeItem,
 	quantityIncrement,
 	quantityDecrement,
+	subtotal,
+	orderTotal,
+	shippingFee,
+	setOrderSummary,
 }) => {
 	return (
 		<div
@@ -103,18 +107,22 @@ const Cart = ({
 			<div className="px-10 border-y border-zinc-300">
 				<div className="flex justify-between pt-2">
 					<span className="text-zinc-800">Subtotal</span>
-					<span className="text-zinc-800">$0.00</span>
+					<span className="text-zinc-800">
+						${subtotal.toFixed(2)}
+					</span>
 				</div>
 				<div className="flex justify-between py-2">
 					<span className="text-zinc-800">Shipping & Handling</span>
-					<span className="text-zinc-800">$0.00</span>
+					<span className="text-zinc-800">
+						${shippingFee.toFixed(2)}
+					</span>
 				</div>
 				<div className="flex justify-between py-2 border-t border-zinc-300">
 					<span className="text-blue-600 text-lg font-bold">
 						Order Total
 					</span>
 					<span className="text-blue-600 text-lg font-bold">
-						$0.00
+						${orderTotal.toFixed(2)}
 					</span>
 				</div>
 			</div>
@@ -134,6 +142,7 @@ const Cart = ({
 							: "bg-blue-600 cursor-pointer"
 					}`}
 					disabled={cart.length === 0}
+					onClick={() => setOrderSummary(true)}
 				>
 					Checkout
 				</button>

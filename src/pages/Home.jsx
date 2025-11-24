@@ -4,12 +4,25 @@ import Banner from "../components/Banner";
 import Product from "../components/Product";
 import Cart from "../components/Cart";
 import Wishlist from "../components/Wishlist";
+import OrderSummary from "../components/OrderSummary";
+import OrderPlace from "../components/OrderPlace";
 
 const Home = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [activePanel, setActivePanel] = useState(null);
 	const [cart, setCart] = useState([]);
+	const [orderSummary, setOrderSummary] = useState(false);
+	const [orderPlaced, setOrderPlaced] = useState(false);
+
+	// Total Calculation
+	const subtotal = cart.reduce(
+		(acc, item) => acc + item.price * item.quantity,
+		0
+	);
+	const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+	const shippingFee = totalItems * 1;
+	const orderTotal = subtotal + shippingFee;
 
 	useEffect(() => {
 		const changeNavbar = () => {
@@ -79,6 +92,7 @@ const Home = () => {
 				setSearchTerm={setSearchTerm}
 				isScrolled={isScrolled}
 				handlePanel={handlePanel}
+				totalItems={totalItems}
 			/>
 			<Banner />
 			<Product searchTerm={searchTerm} addToCart={addToCart} />
@@ -89,8 +103,28 @@ const Home = () => {
 				removeItem={removeItem}
 				quantityIncrement={quantityIncrement}
 				quantityDecrement={quantityDecrement}
+				subtotal={subtotal}
+				shippingFee={shippingFee}
+				orderTotal={orderTotal}
+				setOrderSummary={setOrderSummary}
 			/>
 			<Wishlist activePanel={activePanel} handleClose={handleClose} />
+
+			{/* Order Summary */}
+			{orderSummary && (
+				<OrderSummary
+					cart={cart}
+					subtotal={subtotal}
+					shippingFee={shippingFee}
+					orderTotal={orderTotal}
+					setOrderPlaced={setOrderPlaced}
+					setOrderSummary={setOrderSummary}
+                    setCart={setCart}
+				/>
+			)}
+
+			{/* Order Placed */}
+			{orderPlaced && <OrderPlace setOrderPlaced={setOrderPlaced}/>}
 		</div>
 	);
 };
