@@ -11,11 +11,21 @@ const Home = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [activePanel, setActivePanel] = useState(null);
-	const [cart, setCart] = useState([]);
+
+	// lazy initialisation for cart
+	const [cart, setCart] = useState(() => {
+		const storeCart = localStorage.getItem("cart");
+		return storeCart ? JSON.parse(storeCart) : [];
+	});
+
+	// lazy initialisation for wishlist
+	const [wishlist, setWishlist] = useState(() => {
+		const storeWishlist = localStorage.getItem("wishlist");
+		return storeWishlist ? JSON.parse(storeWishlist) : [];
+	});
+
 	const [orderSummary, setOrderSummary] = useState(false);
 	const [orderPlaced, setOrderPlaced] = useState(false);
-
-	const [wishlist, setWishlist] = useState([]);
 
 	// Total Calculation
 	const subtotal = cart.reduce(
@@ -32,6 +42,12 @@ const Home = () => {
 		};
 		window.addEventListener("scroll", changeNavbar);
 	}, []);
+
+	// Save Items to LocalStorage
+	useEffect(() => {
+		localStorage.setItem("cart", JSON.stringify(cart));
+		localStorage.setItem("wishlist", JSON.stringify(wishlist));
+	}, [cart, wishlist]);
 
 	// Handle Scroll
 	const handleScroll = () => {
