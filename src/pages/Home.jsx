@@ -15,6 +15,8 @@ const Home = () => {
 	const [orderSummary, setOrderSummary] = useState(false);
 	const [orderPlaced, setOrderPlaced] = useState(false);
 
+	const [wishlist, setWishlist] = useState([]);
+
 	// Total Calculation
 	const subtotal = cart.reduce(
 		(acc, item) => acc + item.price * item.quantity,
@@ -85,6 +87,23 @@ const Home = () => {
 		setCart([...cart, { ...product, quantity: 1 }]);
 	};
 
+	// Wishlist function
+	const addToWishlist = (product) => {
+		const isInWishlist = wishlist.some((item) => item.id === product.id);
+
+		if (isInWishlist) {
+			setWishlist(wishlist.filter((item) => item.id !== product.id));
+		} else {
+			const addedDate = new Date().toLocaleString("en-GB");
+			setWishlist([...wishlist, { ...product, addedDate }]);
+		}
+	};
+
+	// clearWishList
+	const clearWishlist = () => {
+		setWishlist([]);
+	};
+
 	return (
 		<div>
 			<Navbar
@@ -93,9 +112,15 @@ const Home = () => {
 				isScrolled={isScrolled}
 				handlePanel={handlePanel}
 				totalItems={totalItems}
+				wishlist={wishlist}
 			/>
 			<Banner />
-			<Product searchTerm={searchTerm} addToCart={addToCart} />
+			<Product
+				searchTerm={searchTerm}
+				addToCart={addToCart}
+				addToWishlist={addToWishlist}
+				wishlist={wishlist}
+			/>
 			<Cart
 				activePanel={activePanel}
 				handleClose={handleClose}
@@ -108,7 +133,13 @@ const Home = () => {
 				orderTotal={orderTotal}
 				setOrderSummary={setOrderSummary}
 			/>
-			<Wishlist activePanel={activePanel} handleClose={handleClose} />
+			<Wishlist
+				activePanel={activePanel}
+				handleClose={handleClose}
+				wishlist={wishlist}
+				addToCart={addToCart}
+				clearWishlist={clearWishlist}
+			/>
 
 			{/* Order Summary */}
 			{orderSummary && (
@@ -119,12 +150,12 @@ const Home = () => {
 					orderTotal={orderTotal}
 					setOrderPlaced={setOrderPlaced}
 					setOrderSummary={setOrderSummary}
-                    setCart={setCart}
+					setCart={setCart}
 				/>
 			)}
 
 			{/* Order Placed */}
-			{orderPlaced && <OrderPlace setOrderPlaced={setOrderPlaced}/>}
+			{orderPlaced && <OrderPlace setOrderPlaced={setOrderPlaced} />}
 		</div>
 	);
 };

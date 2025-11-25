@@ -10,6 +10,7 @@ const Navbar = ({
 	isScrolled,
 	handlePanel,
 	totalItems,
+	wishlist,
 }) => {
 	return (
 		<header
@@ -54,9 +55,11 @@ const Navbar = ({
 						onClick={() => handlePanel("wishlist")}
 					>
 						<GoHeartFill />
-						<span className="flex justify-center items-center bg-red-600 text-white w-5 h-5 rounded-full text-[14px] absolute top-4 right-3 border-2 border-white">
-							1
-						</span>
+						{wishlist.length > 0 && (
+							<span className="flex justify-center items-center bg-red-600 text-white w-5 h-5 rounded-full text-[14px] absolute top-4 right-3 border-2 border-white">
+								{wishlist.length}
+							</span>
+						)}
 					</button>
 
 					{/* Cart Icon */}
