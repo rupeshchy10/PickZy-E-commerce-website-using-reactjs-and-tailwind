@@ -14,7 +14,7 @@ const Navbar = ({
 }) => {
 	return (
 		<header
-			className={`bg-white fixed top-0 left-0 right-0 z-30 ${
+			className={`bg-[#e4e4f3] fixed top-0 left-0 right-0 z-30 ${
 				isScrolled ? "shadow-lg" : ""
 			}`}
 		>
