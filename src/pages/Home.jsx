@@ -8,6 +8,7 @@ import OrderSummary from "../components/OrderSummary";
 import OrderPlace from "../components/OrderPlace";
 
 const Home = () => {
+
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [activePanel, setActivePanel] = useState(null);

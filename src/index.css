@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 .scroll::-webkit-scrollbar{
     display: none;
 }
 
 body{
-    background: #e4e4f3;
+    background: ;
 }
